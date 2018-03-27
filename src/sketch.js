@@ -25,6 +25,7 @@ let upDownMargin;
 let oscCounter = 1;
 let notes = [130.81, 146.83, 164.81, 174.61, 196.00, 220.00, 246.94, 261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]
 
+
 var attackLevel = 1.0;
 var releaseLevel = 0;
 
@@ -32,6 +33,7 @@ var attackTime = 0.001
 var decayTime = 0.5;
 var susPercent = 0.2;
 var releaseTime = 0.5;
+
 
 
 function setup(){
@@ -117,15 +119,20 @@ function draw(){
   background(0)
   drawGrid()
 
-  fill(255)
+  textFont('Faster One')
+  textSize(32);
+  text('Bounce', leftRightMargin, upDownMargin + 500)
+
+
+  textSize(12);
+  fill(6, 229, 20)
   textAlign(LEFT)
+  textFont('Source Code Pro')
   text('Speed', leftRightMargin, upDownMargin + 140);
 
-  fill(255)
   textAlign(LEFT)
   text('Direction', leftRightMargin, upDownMargin + 190);
 
-  fill(255)
   textAlign(LEFT)
   text('Note', leftRightMargin, upDownMargin + 240);
 
