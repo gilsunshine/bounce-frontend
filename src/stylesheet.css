@@ -1,0 +1,43 @@
+body{
+  background-color: black;
+}
+/*
+  html, body {height:100%;}
+html {display:table; width:100%;}
+body {
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+background: linear-gradient(338deg, #f6f8fa, #8b8e95, #bfc1c3);
+  background-size: 800% 800%;
+
+  -webkit-animation: Gradiente 31s ease infinite;
+  animation: Gradiente 31s ease infinite;
+}
+
+@-webkit-keyframes Gradiente {
+   0%{background-position:31% 0%}
+   50%{background-position:70% 100%}
+   100%{background-position:31% 0%}
+}
+@keyframes Gradiente {
+   0%{background-position:31% 0%}
+   50%{background-position:70% 100%}
+   100%{background-position:31% 0%}
+} */
+
+/* body{
+  text-align: center;
+  vertical-align: middle */
+  /* justify-content: center */
+/* } */
+/* canvas#defaultCanvas0{
+  margin-left: 5%;
+} */
+
+/* #control-panel{
+  width: 20%;
+  height: 600px;
+  float: left;
+  background-color: black;
+} */
