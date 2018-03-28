@@ -6,8 +6,8 @@ let upDownBalls = []
 let leftRightBalls = []
 let upDownBlocks = []
 let leftRightBlocks = []
-let notes = [130.81, 146.83, 164.81, 174.61, 196.00, 220.00, 246.94, 261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]
-let scale = 20
+
+let scale
 let clicked = false
 let x1
 let y1
@@ -22,56 +22,36 @@ let canvasDiv;
 let leftRightMargin;
 let upDownMargin;
 let oscCounter = 1;
+let divSize
+let controllerDiv
+let panelWidth = 300
 
 function setup(){
-  leftRightMargin = roundTo((windowWidth - 940)/2)
-  upDownMargin = roundTo((windowHeight - 640)/2)
+  scale = 20
+  divSize = scale * 32
+  leftRightMargin = roundTo((windowWidth - (divSize + panelWidth))/2)
+  upDownMargin = roundTo((windowHeight - divSize)/2)
   console.log(leftRightMargin)
   console.log(upDownMargin)
-  let leftMargin = (1600 * .05) + 300
+  let leftMargin = (1600 * .05) + panelWidth
   let cc = createCanvas(windowWidth, windowHeight)
+  cc.position(0, 0);
   background(0)
   newCanvas.innerHTML = `${cc}`
+  
+  // soundSetup()
 
-  soundSetup()
-
-  canvasDiv = createDiv('').size(640, 640);
-  canvasDiv.position(leftRightMargin + 300, upDownMargin)
-  canvasDiv.mousePressed(divPressed)
-
-  blockButton = createButton('Create Block')
-  blockButton.mousePressed(setBlock)
-  blockButton.position(leftRightMargin, upDownMargin)
-
-  ballButton = createButton('Create Ball')
-  ballButton.mousePressed(setBall)
-  ballButton.position(leftRightMargin, upDownMargin + 50)
-
-  //speed
-  speedSlider = createSlider(0, 5, 2, 1);
-  speedSlider.position(leftRightMargin, upDownMargin + 150);
-  speedSlider.style('width', '80px');
-
-  //direction
-  directionSlider = createSlider(0, 1, 0, 1);
-
-  directionSlider.position(leftRightMargin, upDownMargin + 200);
-  directionSlider.style('width', '80px');
-
-  //note
-  noteSlider = createSlider(0, 14, 4, 1);
-  noteSlider.position(leftRightMargin, upDownMargin + 250);
-  noteSlider.style('width', '80px');
+  createLayout()
 }
 
 function draw(){
   background(0)
   drawGrid()
 
-  textFont('Faster One')
-  textSize(32);
-  text('Bounce', leftRightMargin, upDownMargin + 500)
-
+  // textFont('Faster One')
+  // fill(6, 229, 20)
+  // textSize(32);
+  // text('Bounce', leftRightMargin, upDownMargin + 20)
 
   textSize(12);
   fill(6, 229, 20)
@@ -116,8 +96,6 @@ function draw(){
     })
   })
 }
-
-
 
 function divPressed(){
   console.log('hello')

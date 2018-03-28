@@ -1,15 +1,18 @@
 class Ball{
-  constructor(x, y, radius, speed, direction, note){
+  constructor(x, y, radius, speed, direction){
     this.x = x
     this.y = y
     this.radius = radius
     this.speed = speed
     this.direction = direction
-    this.note = note
+    let note = notes[noteSel.value()]
+    let waveType = waveSel.value()
+    let delayTime = delaySlider.value()
+    let releaseTime = releaseSlider.value()
+    this.sound = createSound(note, waveType, delayTime, releaseTime)
   }
 
   show(){
-
     noStroke()
     fill(255)
     ellipse(this.x, this.y, this.radius)
@@ -29,8 +32,7 @@ function checkBallCords(x, y){
   y = roundTo(y)
   let speed = setSpeed(speedSlider.value())
   let direction = directionSlider.value()
-  let note = setNote(noteSlider.value())
-  let ball = new Ball(x, y, 5, speed, direction, note)
+  let ball = new Ball(x, y, 5, speed, direction)
   if (direction === 0){
     leftRightBalls.push(ball)
   } else{
@@ -69,40 +71,15 @@ function checkCollision(ball){
         let star = new Star(ball.x, ball.y)
         star.createParticles()
         stars.push(star)
-        if (oscCounter % 3 === 0){
-          wave1.freq(ball.note)
-          playNote(1)
-          oscCounter++
-        } else if (oscCounter % 3 === 1 ){
-          wave2.freq(ball.note)
-          playNote(2)
-          oscCounter++
-        } else{
-          wave3.freq(ball.note)
-          playNote(3)
-          oscCounter++
-        }
-      }
-    })
-    if (ball.x === leftRightMargin + 300 || ball.x === leftRightMargin + 940 ){
+        ball.sound.env.play()
+    } else if (ball.x === leftRightMargin + panelWidth || ball.x === leftRightMargin + panelWidth + 640 ){
       ball.speed = -ball.speed
       let star = new Star(ball.x, ball.y)
       star.createParticles()
       stars.push(star)
-      if (oscCounter % 3 === 0){
-        wave1.freq(ball.note)
-        playNote(1)
-        oscCounter++
-      } else if (oscCounter % 3 === 1 ){
-        wave2.freq(ball.note)
-        playNote(2)
-        oscCounter++
-      } else{
-        wave3.freq(ball.note)
-        playNote(3)
-        oscCounter++
-      }
+      ball.sound.env.play()
     }
+  })
   } else{
     upDownBlocks.forEach(block => {
       if (block.y1 === ball.y && ball.x >= block.x1 && ball.x <= block.x2){
@@ -110,39 +87,15 @@ function checkCollision(ball){
         let star = new Star(ball.x, ball.y)
         star.createParticles()
         stars.push(star)
-        if (oscCounter % 3 === 0){
-          wave1.freq(ball.note)
-          playNote(1)
-          oscCounter++
-        } else if (oscCounter % 3 === 1 ){
-          wave2.freq(ball.note)
-          playNote(2)
-          oscCounter++
-        } else{
-          wave3.freq(ball.note)
-          playNote(3)
-          oscCounter++
-        }
+        ball.sound.env.play()
       }
     })
-    if (ball.y === upDownMargin || ball.y === 780 - upDownMargin){
+    if (ball.y === upDownMargin || ball.y === upDownMargin + 640){
       ball.speed = -ball.speed
       let star = new Star(ball.x, ball.y)
       star.createParticles()
       stars.push(star)
-      if (oscCounter % 3 === 0){
-        wave1.freq(ball.note)
-        playNote(1)
-        oscCounter++
-      } else if (oscCounter % 3 === 1 ){
-        wave2.freq(ball.note)
-        playNote(2)
-        oscCounter++
-      } else{
-        wave3.freq(ball.note)
-        playNote(3)
-        oscCounter++
-      }
+      ball.sound.env.play()
     }
   }
 }
