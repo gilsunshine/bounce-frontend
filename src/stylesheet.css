@@ -1,6 +1,16 @@
 body{
   background-color: black;
 }
+
+button{
+  font-family: 'Source Code Pro';
+  font-weight: bolder;
+  background-color: rgba(6, 229, 20, 1);
+  border: none;
+  border-radius: 10px;
+}
+
+
 /*
   html, body {height:100%;}
 html {display:table; width:100%;}
