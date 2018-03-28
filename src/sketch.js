@@ -35,7 +35,6 @@ var releaseTime = 0.5;
 
 
 function setup(){
-  console.log(windowWidth, windowHeight)
   leftRightMargin = (windowWidth - 1200)/2
   upDownMargin = ((windowHeight - 600)/2) -10
   let leftMargin = (windowWidth * .05) + 400
@@ -151,7 +150,6 @@ function draw(){
 
   stars.forEach(star =>{
     star.checkParticles()
-    console.log(star.particles.length)
     if(star.particles.length === 0){
       stars.splice(stars.indexOf(star), 1)
     }

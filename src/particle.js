@@ -1,10 +1,22 @@
 class Particle{
-  constructor(x, y, radius, direction){
+  constructor(x, y, radius, direction, color){
     this.x = x
     this.y = y
-    this.r = random(0, 255)
-    this.g = random(0, 255)
-    this.b = random(0, 255)
+    this.color = color
+    if (this.color === 0){
+      this.r = random(0, 50)
+      this.g = random(0, 100)
+      this.b = random(0, 255)
+    } else if (this.color === 1){
+      this.r = random(0, 50)
+      this.g = random(0, 255)
+      this.b = random(0, 255)
+    } else if (this.color === 2){
+      this.r = random(0, 50)
+      this.g = random(0, 255)
+      this.b = random(0, 100)
+    }
+
     this.alpha = 255
     this.direction = random(0, 2 * PI)
     this.radius = radius
@@ -21,7 +33,6 @@ class Particle{
   }
 
   update(){
-    console.log(this.direction)
     push()
     rotate(this.direction)
     this.x += this.xSpeed
