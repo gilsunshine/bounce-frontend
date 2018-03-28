@@ -59,3 +59,90 @@ function setNote(num){
   let freq = notes[num]
   return freq
 }
+
+function checkCollision(ball){
+
+  if (ball.direction === 0){
+    leftRightBlocks.forEach(block => {
+      if (block.x1 === ball.x && ball.y >= block.y1 && ball.y <= block.y2){
+        ball.speed = -ball.speed
+        let star = new Star(ball.x, ball.y)
+        star.createParticles()
+        stars.push(star)
+        if (oscCounter % 3 === 0){
+          wave1.freq(ball.note)
+          playNote(1)
+          oscCounter++
+        } else if (oscCounter % 3 === 1 ){
+          wave2.freq(ball.note)
+          playNote(2)
+          oscCounter++
+        } else{
+          wave3.freq(ball.note)
+          playNote(3)
+          oscCounter++
+        }
+      }
+    })
+    if (ball.x === leftRightMargin + 400 || ball.x === leftRightMargin + 1200 ){
+      ball.speed = -ball.speed
+      let star = new Star(ball.x, ball.y)
+      star.createParticles()
+      stars.push(star)
+      if (oscCounter % 3 === 0){
+        wave1.freq(ball.note)
+        playNote(1)
+        oscCounter++
+      } else if (oscCounter % 3 === 1 ){
+        wave2.freq(ball.note)
+        playNote(2)
+        oscCounter++
+      } else{
+        wave3.freq(ball.note)
+        playNote(3)
+        oscCounter++
+      }
+    }
+  } else{
+    upDownBlocks.forEach(block => {
+      if (block.y1 === ball.y && ball.x >= block.x1 && ball.x <= block.x2){
+        ball.speed = -ball.speed
+        let star = new Star(ball.x, ball.y)
+        star.createParticles()
+        stars.push(star)
+        if (oscCounter % 3 === 0){
+          wave1.freq(ball.note)
+          playNote(1)
+          oscCounter++
+        } else if (oscCounter % 3 === 1 ){
+          wave2.freq(ball.note)
+          playNote(2)
+          oscCounter++
+        } else{
+          wave3.freq(ball.note)
+          playNote(3)
+          oscCounter++
+        }
+      }
+    })
+    if (ball.y === upDownMargin || ball.y === height - upDownMargin){
+      ball.speed = -ball.speed
+      let star = new Star(ball.x, ball.y)
+      star.createParticles()
+      stars.push(star)
+      if (oscCounter % 3 === 0){
+        wave1.freq(ball.note)
+        playNote(1)
+        oscCounter++
+      } else if (oscCounter % 3 === 1 ){
+        wave2.freq(ball.note)
+        playNote(2)
+        oscCounter++
+      } else{
+        wave3.freq(ball.note)
+        playNote(3)
+        oscCounter++
+      }
+    }
+  }
+}
