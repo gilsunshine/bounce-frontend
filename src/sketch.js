@@ -24,9 +24,11 @@ let upDownMargin;
 let oscCounter = 1;
 
 function setup(){
-  leftRightMargin = (windowWidth - 940)/2
-  upDownMargin = ((windowHeight - 640)/2)
-  let leftMargin = (windowWidth * .05) + 300
+  leftRightMargin = roundTo((windowWidth - 940)/2)
+  upDownMargin = roundTo((windowHeight - 640)/2)
+  console.log(leftRightMargin)
+  console.log(upDownMargin)
+  let leftMargin = (1600 * .05) + 300
   let cc = createCanvas(windowWidth, windowHeight)
   background(0)
   newCanvas.innerHTML = `${cc}`

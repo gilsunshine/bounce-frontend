@@ -84,7 +84,7 @@ function checkCollision(ball){
         }
       }
     })
-    if (ball.x === leftRightMargin + 400 || ball.x === leftRightMargin + 1200 ){
+    if (ball.x === leftRightMargin + 300 || ball.x === leftRightMargin + 940 ){
       ball.speed = -ball.speed
       let star = new Star(ball.x, ball.y)
       star.createParticles()
@@ -125,7 +125,7 @@ function checkCollision(ball){
         }
       }
     })
-    if (ball.y === upDownMargin || ball.y === height - upDownMargin){
+    if (ball.y === upDownMargin || ball.y === 780 - upDownMargin){
       ball.speed = -ball.speed
       let star = new Star(ball.x, ball.y)
       star.createParticles()
