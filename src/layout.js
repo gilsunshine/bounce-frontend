@@ -99,7 +99,7 @@ function createLayout(){
   resetButton.mousePressed(resetScene)
   resetButton.position(0, 95)
 
-  saveButton = createButton('"Save"')
+  saveButton = createButton('Save')
   saveButton.size(100, 18)
   saveButton.style('background-color', '#00ff00')
   saveButton.mousePressed(saveScene)

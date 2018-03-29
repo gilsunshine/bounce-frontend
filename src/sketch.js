@@ -1,9 +1,7 @@
 let newCanvas = document.createElement('div')
 newCanvas.id = "new-canvas"
+
 // let sceneNum
-
-
-
 // fetch("https://bounce-123.herokuapp.com/api/v1/scenes/1")
 // .then()
 
@@ -22,8 +20,6 @@ let x2
 let y2
 let makeBlock = false
 let makeBall = false
-let buttonPress = false
-// let blockButtonPress = false
 let blockButton;
 let ballButton;
 let canvasDiv;
@@ -196,7 +192,6 @@ function divPressed(){
       }
       blockClicked = false
       makeBlock = false
-      buttonPress = false
       checkCords(x1, y1, x2, y2)
     }
   }else if(makeBall){
@@ -204,21 +199,18 @@ function divPressed(){
     let y = mouseY
     clicked = false
     makeBall = false
-    buttonPress = false
     checkBallCords(x, y)
   }
 }
 
 function setBlock(){
   blockClicked = !blockClicked
-  buttonPress = !buttonPress
   makeBlock = !makeBlock
   makeBall = false
 }
 
 function setBall(){
   ballClicked = !ballClicked
-  buttonPress = !buttonPress
   makeBall = !makeBall
   makeBlock = false
 }
