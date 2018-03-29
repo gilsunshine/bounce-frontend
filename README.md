@@ -1,4 +1,4 @@
-#Bounce.
+# Bounce
 
 Bounce is an interactive music sequencing application. Start with a preloaded "scene" or reset it and make your own.
 
@@ -10,4 +10,4 @@ The grid is designed to allow you to arrange your music in 4/4 time. You can cre
 
 Bounce was built using Javascript and the P5 library.
 
-![2014-10-22 11_35_09](https://gfycat.com/ifr/AnxiousUnrulyEmu)
+[checkpoint]: (https://media.giphy.com/media/pG5ytHspKhxKkXRZqW/giphy.gif)
