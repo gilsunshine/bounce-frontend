@@ -21,17 +21,31 @@ class Ball{
   update(){
     if (this.direction === 0){
       this.x += this.speed
-    }else if (this.direction === 1){
+    } else if (this.direction === 1){
       this.y += this.speed
     }
   }
 }
 
 function checkBallCords(x, y){
-  x = roundTo(x)
-  y = roundTo(y)
+  let direction
+  if (mouseX <=570 && mouseX >= 560){
+    x = 580
+  }else{
+    x = roundTo(x)
+  }
+  if (mouseY <=70 && mouseY >= 60){
+    y = 80
+  }else{
+    y = roundTo(y)
+  }
   let speed = setSpeed(speedSlider.value())
-  let direction = directionSlider.value()
+  if(directionSelect.value() === 'Left to Right'){
+    direction = 0
+  }else{
+    direction = 1
+  }
+  // let direction = directionSelect.value()
   let ball = new Ball(x, y, 5, speed, direction)
   if (direction === 0){
     leftRightBalls.push(ball)
@@ -72,14 +86,15 @@ function checkCollision(ball){
         star.createParticles()
         stars.push(star)
         ball.sound.env.play()
-    } else if (ball.x === leftRightMargin + panelWidth || ball.x === leftRightMargin + panelWidth + 640 ){
+    }
+  })
+     if (ball.x === leftRightMargin + panelWidth || ball.x === leftRightMargin + panelWidth + 640 ){
       ball.speed = -ball.speed
       let star = new Star(ball.x, ball.y)
       star.createParticles()
       stars.push(star)
       ball.sound.env.play()
     }
-  })
   } else{
     upDownBlocks.forEach(block => {
       if (block.y1 === ball.y && ball.x >= block.x1 && ball.x <= block.x2){

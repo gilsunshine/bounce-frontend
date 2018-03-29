@@ -8,7 +8,7 @@ class Block{
   }
 
   show(){
-    stroke(255)
+    stroke(230, 255, 0)
     line(this.x1, this.y1, this.x2, this.y2)
   }
 }
@@ -22,7 +22,6 @@ function checkCords(x1, y1, x2, y2){
   // console.log(x1)
   if(x1 === x2){
     leftRightBlocks.push(new Block(x1, y1, x2, y2, 0))
-    console.log(leftRightBlocks)
   }else if (y1 === y2){
     upDownBlocks.push(new Block(x1, y1, x2, y2, 1))
   }else if (Math.abs(x1 - x2) < Math.abs(y1 - y2)){
@@ -36,13 +35,24 @@ function checkCords(x1, y1, x2, y2){
 
 function roundTo(num){
   num = Math.floor(num)
-  for(let i = num; i >= 0; i--){
-    if(i % 20 === 0){
-      if (i === 0){
-        i = 20
-      }
-      console.log(i)
-      return i
-    }
+  let mod = num % 20
+  if(num % 20 === 0){
+    return num
   }
+  if(num % 20 >= 10){
+    num += 20 - (num % 20)
+    return num
+  }else{
+    num -= (num % 20)
+    return num
+  }
+  // for(let i = num; i >= 0; i--){
+  //   if(i % 20 === 0){
+  //     if (i === 0){
+  //       i = 20
+  //     }
+  //     console.log(i)
+  //     return i
+  //   }
+  // }
 }

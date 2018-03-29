@@ -31,23 +31,26 @@ function createLayout(){
 
   blockButton = createButton('Create Block')
   blockButton.size(100, 18)
+  blockButton.style('background-color', '#00ff00')
   blockButton.mousePressed(setBlock)
-  blockButton.position(0, 50)
+  blockButton.position(0, 60)
 
   ballButton = createButton('Create Ball')
   ballButton.size(100, 18)
+  ballButton.style('background-color', '#00ff00')
   ballButton.mousePressed(setBall)
-  ballButton.position(0, 80)
+  ballButton.position(0, 90)
 
   //speed
   speedSlider = createSlider(0, 5, 2, 1);
-  speedSlider.position(0, 150);
+  speedSlider.position(0, 140);
   speedSlider.style('width', '80px');
 
   //direction
-  directionSlider = createSlider(0, 1, 0, 1);
-  directionSlider.position(0, 200);
-  directionSlider.style('width', '80px');
+  directionSelect = createSelect();
+  directionSelect.position(0, 200);
+  directionSelect.option('Left to Right')
+  directionSelect.option('Up and Down')
 
   //note
   noteSel = createSelect();
@@ -67,27 +70,27 @@ function createLayout(){
   noteSel.option('A5');
   noteSel.option('B5');
   noteSel.option('C5');
-  noteSel.position(0, 250);
+  noteSel.position(0, 240);
 
   waveSel = createSelect();
-  waveSel.position(0, 300);
+  waveSel.position(0, 290);
   waveSel.option('sine');
   waveSel.option('triangle');
   waveSel.option('square');
   waveSel.option('sawtooth');
 
-  delaySlider = createSlider(500, 3000, 1000, 100);
-  delaySlider.position(0, 350);
+  delaySlider = createSlider(0, .7, 0, .1);
+  delaySlider.position(0, 340);
   delaySlider.style('width', '80px');
 
   releaseSlider = createSlider(0.1, 0.8, 0.5, 0.1);
-  releaseSlider.position(0, 400);
+  releaseSlider.position(0, 380);
   releaseSlider.style('width', '80px');
 
   let bounceText = createP('Bounce')
-  bounceText.style('color', '#06e514')
+  bounceText.style('color', '#00ff00')
   bounceText.style('font-family', 'Faster One')
-  bounceText.style('font-size', '32px')
+  bounceText.style('font-size', '40px')
   bounceText.style('position', 10,-40)
 
   controllerDiv = createDiv('').size(panelWidth, divSize)
@@ -95,7 +98,7 @@ function createLayout(){
   controllerDiv.child(blockButton)
   controllerDiv.child(ballButton)
   controllerDiv.child(speedSlider)
-  controllerDiv.child(directionSlider)
+  controllerDiv.child(directionSelect)
   controllerDiv.child(bounceText)
   controllerDiv.child(noteSel)
   controllerDiv.child(waveSel)

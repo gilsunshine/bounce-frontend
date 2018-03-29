@@ -21,49 +21,87 @@ let ballButton;
 let canvasDiv;
 let leftRightMargin;
 let upDownMargin;
-let oscCounter = 1;
+let oscCounter = 1
 let divSize
 let controllerDiv
 let panelWidth = 300
+let fft
+let xspacing = 1
+let w = 280
+let theta = 0.0
+let amp
+let period = 100
+let dx
+let yvalues
+
+let xspacing1 = 1
+let w1 = 280
+let theta1 = 0.0
+let amp1
+let period1 = 100
+let dx1
+let yvalues1
+
 
 function setup(){
+  fft = new p5.FFT()
   scale = 20
   divSize = scale * 32
   leftRightMargin = roundTo((windowWidth - (divSize + panelWidth))/2)
   upDownMargin = roundTo((windowHeight - divSize)/2)
-  console.log(leftRightMargin)
-  console.log(upDownMargin)
   let leftMargin = (1600 * .05) + panelWidth
   let cc = createCanvas(windowWidth, windowHeight)
-  cc.position(0, 0);
+  cc.position(0, 0)
   background(0)
   newCanvas.innerHTML = `${cc}`
-  
-  // soundSetup()
-
   createLayout()
+  dx = (TWO_PI/ period) * xspacing
+  yvalues = new Array(floor(w/xspacing))
+  dx1 = (TWO_PI/ period1) * xspacing1
+  yvalues1 = new Array(floor(w1/xspacing1))
 }
 
 function draw(){
   background(0)
+  console.log(yvalues.length)
+  let spectrum = fft.waveform(32)
+  spectrum = spectrum.slice(0, 15)
+  amp = Math.abs(spectrum[8])* 80
+  amp1 = Math.abs(spectrum[8])* 80
+
+  noStroke()
+  fill(40)
+  rect(leftRightMargin, upDownMargin + 440, 280, 200)
+  calcWave(amp)
+  calcWave1(amp1)
+  renderWave()
+  renderWave1()
+  fill(50)
+  noStroke()
+
   drawGrid()
-
-  // textFont('Faster One')
-  // fill(6, 229, 20)
-  // textSize(32);
-  // text('Bounce', leftRightMargin, upDownMargin + 20)
-
+  strokeWeight(0)
   textSize(12);
-  fill(6, 229, 20)
+  fill(0, 255, 0)
   textAlign(LEFT)
   textFont('Source Code Pro')
-  text('Speed', leftRightMargin, upDownMargin + 140);
+  text('Speed', leftRightMargin, upDownMargin + 135);
 
   textAlign(LEFT)
-  text('Direction', leftRightMargin, upDownMargin + 190);
+  text('Direction', leftRightMargin, upDownMargin + 180);
 
   textAlign(LEFT)
-  text('Note', leftRightMargin, upDownMargin + 240);
+  text('Note', leftRightMargin, upDownMargin + 230);
+
+  textAlign(LEFT)
+  text('Wave Type', leftRightMargin, upDownMargin + 280);
+
+  textAlign(LEFT)
+  text('Delay Time', leftRightMargin, upDownMargin + 330);
+
+  textAlign(LEFT)
+  text('Release Time', leftRightMargin, upDownMargin + 380);
+  strokeWeight(1)
 
   upDownBlocks.forEach(block => {
     block.show()
@@ -144,4 +182,41 @@ function setBall(){
   clicked = !clicked
   buttonPress = !buttonPress
   makeBall = !makeBall
+}
+
+function calcWave(amp) {
+  theta += 0.1;
+  let x = theta;
+  for (let i = 0; i < yvalues.length; i++) {
+    yvalues[i] = sin(x)*amp;
+    x+=dx;
+  }
+}
+
+function renderWave() {
+  for (let x = 0; x < yvalues.length; x++) {
+    // stroke(17, 240, 0, 255)
+    // stroke(255, 115, 35, 255)
+    // stroke(255, 50, 100, 255)
+    stroke(240, 255, 0, 255)
+    line(x + leftRightMargin, yvalues[x] + upDownMargin + 540, x + leftRightMargin, upDownMargin + 640)
+  }
+}
+
+function calcWave1(amp) {
+  theta1 += 0.2;
+  let x = theta1;
+  for (let i = 0; i < yvalues.length; i++) {
+    yvalues1[i] = sin(x)*amp1;
+    x+=dx1;
+  }
+}
+
+function renderWave1() {
+  for (let x = 0; x < yvalues1.length; x++) {
+    // stroke(145, 255, 5, 127)
+    // stroke(30, 115, 255, 127)
+    stroke(0, 100, 255, 200)
+    line(x + leftRightMargin, yvalues1[x] + upDownMargin + 540, x + leftRightMargin, upDownMargin + 640)
+  }
 }
