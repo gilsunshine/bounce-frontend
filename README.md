@@ -1,4 +1,4 @@
-Bounce.
+#Bounce.
 
 Bounce is an interactive music sequencing application. Start with a preloaded "scene" or reset it and make your own.
 
