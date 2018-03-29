@@ -6,7 +6,6 @@ class Block{
     this.y2 = y2
     this.direction = direction
   }
-
   show(){
     stroke(230, 255, 0)
     line(this.x1, this.y1, this.x2, this.y2)
@@ -14,12 +13,10 @@ class Block{
 }
 
 function checkCords(x1, y1, x2, y2){
-
   x1 = roundTo(x1)
   y1 = roundTo(y1)
   x2 = roundTo(x2)
   y2 = roundTo(y2)
-  // console.log(x1)
   if(x1 === x2){
     leftRightBlocks.push(new Block(x1, y1, x2, y2, 0))
   }else if (y1 === y2){
@@ -46,13 +43,4 @@ function roundTo(num){
     num -= (num % 20)
     return num
   }
-  // for(let i = num; i >= 0; i--){
-  //   if(i % 20 === 0){
-  //     if (i === 0){
-  //       i = 20
-  //     }
-  //     console.log(i)
-  //     return i
-  //   }
-  // }
 }

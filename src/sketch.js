@@ -1,5 +1,11 @@
 let newCanvas = document.createElement('div')
 newCanvas.id = "new-canvas"
+// let sceneNum
+
+
+
+// fetch("https://bounce-123.herokuapp.com/api/v1/scenes/1")
+// .then()
 
 let stars = []
 let upDownBalls = []
@@ -8,7 +14,8 @@ let upDownBlocks = []
 let leftRightBlocks = []
 
 let scale
-let clicked = false
+let ballClicked = false
+let blockClicked = false
 let x1
 let y1
 let x2
@@ -16,6 +23,7 @@ let y2
 let makeBlock = false
 let makeBall = false
 let buttonPress = false
+// let blockButtonPress = false
 let blockButton;
 let ballButton;
 let canvasDiv;
@@ -42,6 +50,30 @@ let period1 = 100
 let dx1
 let yvalues1
 
+let numScenes
+
+fetch("https://bounce-123.herokuapp.com/api/v1/scenes/")
+.then(res => res.json())
+.then(json => {
+  numScenes = json.length
+  let sceneNum = Math.floor(random(1, numScenes + 1))
+  fetch(`https://bounce-123.herokuapp.com/api/v1/scenes/${sceneNum}`)
+  .then(res => res.json())
+  .then(json =>{
+    json.balls.forEach(ball => {
+      console.log(ball.id)
+      let newestBall = new Ball(ball.x + leftRightMargin + panelWidth, ball.y + upDownMargin, 5, ball.speed, ball.direction, ball.note, ball.wave_type, ball.delay_time, ball.release_time)
+      if (ball.direction === 0){
+        leftRightBalls.push(newestBall)
+      } else{
+        upDownBalls.push(newestBall)
+      }
+    })
+    json.blocks.forEach(block => {
+      checkCords(block.x1 + leftRightMargin + panelWidth, block.y1 + upDownMargin, block.x2 + leftRightMargin + panelWidth, block.y2 + upDownMargin)
+    })
+  })
+})
 
 function setup(){
   fft = new p5.FFT()
@@ -62,8 +94,9 @@ function setup(){
 }
 
 function draw(){
+
   background(0)
-  console.log(yvalues.length)
+
   let spectrum = fft.waveform(32)
   spectrum = spectrum.slice(0, 15)
   amp = Math.abs(spectrum[8])* 80
@@ -72,20 +105,24 @@ function draw(){
   noStroke()
   fill(40)
   rect(leftRightMargin, upDownMargin + 440, 280, 200)
-  calcWave(amp)
-  calcWave1(amp1)
-  renderWave()
-  renderWave1()
-  fill(50)
-  noStroke()
 
+  calcWave(amp)
+  renderWave()
+  calcWave1(amp1)
+  renderWave1()
+
+  // fill(50)
+  // noStroke()
   drawGrid()
+
+  //styling for all text
   strokeWeight(0)
   textSize(12);
   fill(0, 255, 0)
+
   textAlign(LEFT)
   textFont('Source Code Pro')
-  text('Speed', leftRightMargin, upDownMargin + 135);
+  text('Speed', leftRightMargin, upDownMargin + 140);
 
   textAlign(LEFT)
   text('Direction', leftRightMargin, upDownMargin + 180);
@@ -100,7 +137,7 @@ function draw(){
   text('Delay Time', leftRightMargin, upDownMargin + 330);
 
   textAlign(LEFT)
-  text('Release Time', leftRightMargin, upDownMargin + 380);
+  text('Release Time', leftRightMargin, upDownMargin + 375);
   strokeWeight(1)
 
   upDownBlocks.forEach(block => {
@@ -124,10 +161,13 @@ function draw(){
   })
 
   stars.forEach(star =>{
+
     star.checkParticles()
+
     if(star.particles.length === 0){
       stars.splice(stars.indexOf(star), 1)
     }
+
     star.particles.forEach(particle =>{
       particle.show()
       particle.update()
@@ -136,52 +176,168 @@ function draw(){
 }
 
 function divPressed(){
-  console.log('hello')
-  if(buttonPress){
-    if (makeBlock){
-      if (clicked){
-        x1 = mouseX
-        y1 = mouseY
-        clicked = false
-      } else{
-        x2 = mouseX
-        y2 = mouseY
-        if (x1 > x2){
-          let newX = x1
-          x1 = x2
-          x2 = newX
-        }
-        if (y1 > y2){
-          let newY = y1
-          y1 = y2
-          y2 = newY
-        }
-        clicked = false
-        makeBlock = false
-        buttonPress = false
-        checkCords(x1, y1, x2, y2)
+  if (makeBlock){
+    if (blockClicked){
+      x1 = mouseX
+      y1 = mouseY
+      blockClicked = false
+    }else{
+      x2 = mouseX
+      y2 = mouseY
+      if (x1 > x2){
+        let newX = x1
+        x1 = x2
+        x2 = newX
       }
-    }else if(makeBall){
-      let x = mouseX
-      let y = mouseY
-      clicked = false
-      makeBall = false
+      if (y1 > y2){
+        let newY = y1
+        y1 = y2
+        y2 = newY
+      }
+      blockClicked = false
+      makeBlock = false
       buttonPress = false
-      checkBallCords(x, y)
+      checkCords(x1, y1, x2, y2)
     }
+  }else if(makeBall){
+    let x = mouseX
+    let y = mouseY
+    clicked = false
+    makeBall = false
+    buttonPress = false
+    checkBallCords(x, y)
   }
 }
 
 function setBlock(){
-  clicked = !clicked
+  blockClicked = !blockClicked
   buttonPress = !buttonPress
   makeBlock = !makeBlock
+  makeBall = false
 }
 
 function setBall(){
-  clicked = !clicked
+  ballClicked = !ballClicked
   buttonPress = !buttonPress
   makeBall = !makeBall
+  makeBlock = false
+}
+
+function resetScene(){
+  upDownBalls = []
+  leftRightBalls = []
+  upDownBlocks = []
+  leftRightBlocks = []
+}
+
+function saveScene(){
+  let ballsArr = []
+  leftRightBalls.forEach(ball => {
+    let ballObject = {
+      x: ball.x,
+      y: ball.y,
+      speed: ball.speed,
+      direction: ball.direction,
+      note: ball.note,
+      wave_type: ball.waveType,
+      delay_time: ball.delayTime,
+      release_time: ball.releaseTime
+    }
+    ballsArr.push(ballObject)
+  })
+  upDownBalls.forEach(ball => {
+    let ballObject = {
+      x: ball.x,
+      y: ball.y,
+      speed: ball.speed,
+      direction: ball.direction,
+      note: ball.note,
+      wave_type:  ball.waveType,
+      delay_time: ball.delayTime,
+      release_time:  ball.releaseTime
+    }
+    ballsArr.push(ballObject)
+  })
+
+  let blocksArr = []
+  leftRightBlocks.forEach(block => {
+    let blockObject = {
+      x1: block.x1,
+      y1: block.y1,
+      x2: block.x2,
+      y2: block.y2,
+      direction: block.direction,
+      scene_id: numScenes + 1
+    }
+    blocksArr.push(blockObject)
+  })
+  upDownBlocks.forEach(block => {
+    let blockObject = {
+      x1: block.x1,
+      y1: block.y1,
+      x2: block.x2,
+      y2: block.y2,
+      direction: block.direction,
+      scene_id: numScenes + 1
+    }
+    blocksArr.push(blockObject)
+  })
+
+  let sceneId
+
+  fetch("https://bounce-123.herokuapp.com/api/v1/scenes/", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({name: "New Scene"})
+  })
+  .then(res => res.json())
+  .then(json =>{
+    sceneId = json.id
+    blocksArr.forEach(block => {
+      let data = {
+        x1: block.x1 - panelWidth - leftRightMargin,
+        y1: block.y1 - upDownMargin,
+        x2: block.x2 - panelWidth - leftRightMargin,
+        y2: block.y2 - upDownMargin,
+        direction: block.direction,
+        scene_id: sceneId
+      }
+      fetch(`https://bounce-123.herokuapp.com/api/v1/blocks`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(json => console.log(json))
+    })
+
+    ballsArr.forEach(ball => {
+      let data = {
+        x: ball.x - panelWidth - leftRightMargin,
+        y: ball.y - upDownMargin,
+        scene_id: sceneId,
+        speed: ball.speed,
+        direction: ball.direction,
+        note: ball.note,
+        wave_type: ball.waveType,
+        release_time: ball.releaseTime,
+        delay_time: ball.delayTime
+      }
+      fetch(`https://bounce-123.herokuapp.com/api/v1/balls`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(json => console.log(json))
+    })
+  })
 }
 
 function calcWave(amp) {
@@ -195,9 +351,6 @@ function calcWave(amp) {
 
 function renderWave() {
   for (let x = 0; x < yvalues.length; x++) {
-    // stroke(17, 240, 0, 255)
-    // stroke(255, 115, 35, 255)
-    // stroke(255, 50, 100, 255)
     stroke(240, 255, 0, 255)
     line(x + leftRightMargin, yvalues[x] + upDownMargin + 540, x + leftRightMargin, upDownMargin + 640)
   }
@@ -214,8 +367,6 @@ function calcWave1(amp) {
 
 function renderWave1() {
   for (let x = 0; x < yvalues1.length; x++) {
-    // stroke(145, 255, 5, 127)
-    // stroke(30, 115, 255, 127)
     stroke(0, 100, 255, 200)
     line(x + leftRightMargin, yvalues1[x] + upDownMargin + 540, x + leftRightMargin, upDownMargin + 640)
   }

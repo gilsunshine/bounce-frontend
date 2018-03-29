@@ -1,15 +1,22 @@
 class Ball{
-  constructor(x, y, radius, speed, direction){
+  constructor(x, y, radius, speed, direction, note = null, waveType = null, delayTime = null, releaseTime = null){
     this.x = x
     this.y = y
     this.radius = radius
     this.speed = speed
     this.direction = direction
-    let note = notes[noteSel.value()]
-    let waveType = waveSel.value()
-    let delayTime = delaySlider.value()
-    let releaseTime = releaseSlider.value()
-    this.sound = createSound(note, waveType, delayTime, releaseTime)
+    if (note === null) {
+      this.note = notes[noteSel.value()]
+      this.waveType = waveSel.value()
+      this.delayTime = delaySlider.value()
+      this.releaseTime = releaseSlider.value()
+    } else {
+      this.note = note
+      this.waveType = waveType
+      this.delayTime = delayTime
+      this.releaseTime = releaseTime
+    }
+    this.sound = createSound(this.note, this.waveType, this.delayTime, this.releaseTime)
   }
 
   show(){

@@ -39,16 +39,16 @@ function createLayout(){
   ballButton.size(100, 18)
   ballButton.style('background-color', '#00ff00')
   ballButton.mousePressed(setBall)
-  ballButton.position(0, 90)
+  ballButton.position(115, 60)
 
   //speed
   speedSlider = createSlider(0, 5, 2, 1);
-  speedSlider.position(0, 140);
+  speedSlider.position(0, 145);
   speedSlider.style('width', '80px');
 
   //direction
   directionSelect = createSelect();
-  directionSelect.position(0, 200);
+  directionSelect.position(0, 190);
   directionSelect.option('Left to Right')
   directionSelect.option('Up and Down')
 
@@ -80,7 +80,7 @@ function createLayout(){
   waveSel.option('sawtooth');
 
   delaySlider = createSlider(0, .7, 0, .1);
-  delaySlider.position(0, 340);
+  delaySlider.position(0, 335);
   delaySlider.style('width', '80px');
 
   releaseSlider = createSlider(0.1, 0.8, 0.5, 0.1);
@@ -93,6 +93,18 @@ function createLayout(){
   bounceText.style('font-size', '40px')
   bounceText.style('position', 10,-40)
 
+  resetButton = createButton('Reset')
+  resetButton.size(100, 18)
+  resetButton.style('background-color', '#00ff00')
+  resetButton.mousePressed(resetScene)
+  resetButton.position(0, 95)
+
+  saveButton = createButton('"Save"')
+  saveButton.size(100, 18)
+  saveButton.style('background-color', '#00ff00')
+  saveButton.mousePressed(saveScene)
+  saveButton.position(115, 95)
+
   controllerDiv = createDiv('').size(panelWidth, divSize)
   controllerDiv.position(leftRightMargin, upDownMargin)
   controllerDiv.child(blockButton)
@@ -104,4 +116,6 @@ function createLayout(){
   controllerDiv.child(waveSel)
   controllerDiv.child(delaySlider)
   controllerDiv.child(releaseSlider)
+  controllerDiv.child(resetButton)
+  controllerDiv.child(saveButton)
 }
