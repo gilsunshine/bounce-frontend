@@ -10,5 +10,7 @@ The grid is designed to allow you to arrange your music in 4/4 time. You can cre
 
 Bounce was built using Javascript and the P5 library.
 
+You can try Bounce for yourself here: https://gilsunshine.github.io/bounce-frontend/
+
 
 ![checkpoint](https://media.giphy.com/media/pG5ytHspKhxKkXRZqW/giphy.gif)
